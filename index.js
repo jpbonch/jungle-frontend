@@ -14,7 +14,8 @@ connectButton.onclick = async function () {
         }
         connectButton.innerHTML = "Connected"
         const accounts = await ethereum.request({ method: "eth_accounts" })
-        console.log(accounts)
+        console.log(accounts);
+        updateText();
       } else {
         connectButton.innerHTML = "Please install MetaMask"
       }
@@ -64,4 +65,3 @@ async function updateText() {
     document.getElementById("highestDonator").innerHTML = await contract.highestDonator()
     document.getElementById("highestDonation").innerHTML = await contract.highestDonation() / (10**18) + " ETH"
 }
-updateText();
