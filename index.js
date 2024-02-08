@@ -4,6 +4,9 @@ import { ethers } from "./ethers-5.1.esm.min.js"
 
 const connectButton = document.getElementById("connectButton")
 const donateButton = document.getElementById("donateButton")
+if (typeof window.ethereum !== "undefined") {
+    connectButton.innerHTML = "Connected";
+}
 
 connectButton.onclick = async function () {
     if (typeof window.ethereum !== "undefined") {
@@ -22,8 +25,18 @@ connectButton.onclick = async function () {
 }
 
 donateButton.onclick = async function () {
-    const ethAmount = document.getElementById("ethAmount").value
-    console.log(`Funding with ${ethAmount}...`)
+    const ethAmountInput = document.getElementById("ethAmount");
+    const ethAmount = ethAmountInput.value;
+    ethAmountInput.value = "";
+    console.log(`Funding with ${ethAmount}...`);
+    if (typeof window.ethereum === "undefined") {
+        alert("Please connect your wallet first.");
+        return;
+    }
+    if (ethAmount <= document.getElementById("highestDonation").innerHTML) {
+        alert("Amount must be higher than highest donation.");
+        return;
+    }
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
@@ -32,8 +45,18 @@ donateButton.onclick = async function () {
         const transactionResponse = await contract.donate({
             value: ethers.utils.parseEther(ethAmount),
         })
+        console.log("eokok");
+        const loading = document.getElementById("loading");
+        const highestdonator = document.getElementById("highestDonator");
+        const highestdonation = document.getElementById("highestDonation");
+        loading.style.display = "inline-block";
+        highestdonation.style.display = "none";
+        highestdonator.style.display = "none";
         await listenForTransactionMine(transactionResponse, provider)
         await updateText();
+        loading.style.display = "none";
+        highestdonator.style.display = "block";
+        highestdonation.style.display = "block";
         } catch (error) {
         console.log(error)
         }
@@ -43,14 +66,15 @@ donateButton.onclick = async function () {
 }
 
 function listenForTransactionMine(transactionResponse, provider) {
+    
     console.log(`Mining ${transactionResponse.hash}`)
     return new Promise((resolve, reject) => {
         try {
             provider.once(transactionResponse.hash, (transactionReceipt) => {
                 console.log(
                     `Completed with ${transactionReceipt.confirmations} confirmations. `
-                )
-                resolve()
+                )            
+                resolve();
             })
         } catch (error) {
             reject(error)
@@ -59,9 +83,18 @@ function listenForTransactionMine(transactionResponse, provider) {
 }
 
 async function updateText() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-    const contract = new ethers.Contract(contractAddress, abi, signer)
-    document.getElementById("highestDonator").innerHTML = await contract.highestDonator()
-    document.getElementById("highestDonation").innerHTML = await contract.highestDonation() / (10**18) + " ETH"
+    const loading = document.getElementById("loading");
+    loading.style.display = "inline-block";
+    const RPC = "https://endpoints.omniatech.io/v1/eth/sepolia/public";
+    const provider = new ethers.providers.JsonRpcProvider(RPC);
+
+    const contract = new ethers.Contract(contractAddress, abi, provider);
+    
+    const highestDonator = await contract.highestDonator();
+    const highestDonation = await contract.highestDonation() / (10**18) + " ETH";
+    loading.style.display = "none";
+    document.getElementById("highestDonator").innerHTML = highestDonator
+    document.getElementById("highestDonation").innerHTML = highestDonation
+    
 }
+updateText();

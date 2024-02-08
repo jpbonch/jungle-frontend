@@ -2,11 +2,111 @@
     position: absolute;
     top: 10px;
     right: 10px;
+    background: linear-gradient(yellow, #FF3FAF);
+    font-family: 'Honk', system-ui;
+    font-size: 30px;
+    padding: 0;
+    border-radius: 15px;
+    padding: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#donateButton {
+    padding: 10px;
+    border-radius: 15px;
+    width: 75%;
+    margin-top: 5px;
+    background: linear-gradient(yellow, #FF3FAF);
+    font-family: 'Honk', system-ui;
+    font-size: 30px;
+    padding: 0
+}
+
+#donateButton:hover {
+    cursor: pointer;
+}
+
+h3 {
+    font-size: 80px;
+    margin: 10px;
+    margin-bottom: 40px;
 }
 
 .main {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    text-align: center;
 }
+
+
+body {
+    background-color: #2d3648;
+    font-family: 'Honk', system-ui;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 70vh;
+}
+
+#highestDonator {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: gray;
+}
+
+#highestDonation {
+    font-size: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
+    margin: 0px;
+}
+
+input {
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 10px;
+    display: block;
+    color: white;
+    width: 70%;
+    margin: auto;
+    margin-top: 70px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 85px;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  

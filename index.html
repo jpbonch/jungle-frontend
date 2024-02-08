@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ETH Jungle</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
 </head>
 <body>
     <button id="connectButton">Connect</button>
     <div class="main">
         <h3>Highest Donator:</h3>
-        <p id="highestDonator"></p>
+        <div id="loading" class="lds-ring"><div></div><div></div><div></div><div></div></div>
         <h2 id="highestDonation"></h2>
+        <p id="highestDonator"></p>
         <input id="ethAmount" placeholder="ETH Amount" type="number"/>
         <button type="button" id="donateButton" > Donate </button>
     </div>
